@@ -1,0 +1,56 @@
+import type { Product } from "../types/ProductType"
+import photoExample from '../assets/hotdog-ex.jpg'
+
+export const products: Product[] = [
+    {
+        id: 0,
+        title: "Batata Frita",
+        price: 8,
+        photo: photoExample,
+        description: "Batatas Fritas no óleo",
+        offer: false,
+        categorieId: 2,
+        categorieName: "Fritas",
+    },
+    {
+        id: 1,
+        title: "Cachorro quente Brasileiro",
+        price: 18,
+        photo: photoExample,
+        description: "Cachorro quente tradicional brasileiro",
+        offer: false,
+        categorieId: 1,
+        categorieName: "Hotdogs",
+    },
+    {
+        id: 3,
+        title: "Molho de abacaxi",
+        price: 2,
+        photo: photoExample,
+        description: "Molho de acompanhamento de abacaxi",
+        offer: false,
+        categorieId: 3,
+        categorieName: "Molhos",
+    },
+    {
+        id: 4,
+        title: "Coca-cola lata 350ml",
+        price: 8,
+        photo: photoExample,
+        description: "Refrigerante coca-cola lata 350ml tradicional",
+        offer: false,
+        categorieId: 4,
+        categorieName: "Refrigerantes",
+    },
+    {
+        id: 5,
+        title: "Suco de manga tamanho P",
+        price: 8,
+        photo: photoExample,
+        description: "Suco de manga tamanho P de 150ml",
+        offer: false,
+        categorieId: 5,
+        categorieName: "Sucos",
+    },
+]
+

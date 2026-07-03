@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/*criando tipo uma classe personalizada aonde a gente pode atribuir valores próprios*/
+@theme{
+
+  --font-app: "Poppins", sans-serif;
+
+  --color-primary:#FF4d00;
+  --color-secundary:#FFA500;
+
+  --color-background-main:#101112;
+  --color-background-card:#141515;
+  --color-default:#F5F5F5;
+  
+  --color-background-header:#040404;
+  
+    --color-danger-500: #FF5873;
+    /* danger */
+    --color-success-500: #37E359;
+    /* success */
+    --color-warning-500: #F9CA24;
+    /* warning */
+
+}
+
+*{
+  @apply transition-all
+}
+body{
+  /*
+    Aplicando algumas coisas padrões no nosso body CSS comum
+  */
+  @apply m-0 min-h-screen bg-background-main font-app text-default 
+}
+.container-app{
+  @apply px-4 py-2  
+}
+button{
+  @apply cursor-pointer border-none transition-all
+}
+
+.outline-button{
+  @apply rounded-lg bg-transparent
+}
+
+.normal-button{
+  @apply rounded-lg p-3
+}
+
+.icon-animation{
+  @apply
+  transition-all 
+  hover:-scale-125
+  active:-scale-125
+}
