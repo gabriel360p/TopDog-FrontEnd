@@ -4,6 +4,7 @@ export const enum TypeInput {
     PASSWORD = 'password',
     DATE = 'date',
     FILE = 'file',
+    TEL = 'tel',
 }
 
 
