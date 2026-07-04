@@ -8,6 +8,7 @@ export const DefaultLayout = () => {
         <div className="flex flex-col min-h-screen">
             <Header />
             <Outlet />
+            <div className="mt-15"></div>
             <Footer />
         </div>
     )

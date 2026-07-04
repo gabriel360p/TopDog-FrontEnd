@@ -1,5 +1,5 @@
-import { ShoppingCart, User } from "lucide-react"
-import Logo from '../../assets/logo2.jpg'
+import { ShoppingBag, ShoppingCart, User } from "lucide-react"
+import Logo from '../../assets/top-dog.png'
 import { useNavigate } from "react-router-dom"
 export const Header = () => {
     const navigate = useNavigate()
@@ -22,7 +22,7 @@ export const Header = () => {
                         alt="logo-hotdog" />
                 </div>
                 <div className="flex items-center gap-4 justify-end">
-                    <ShoppingCart className="text-secundary cursor-pointer" onClick={() => { navigate('/carrinho') }} />
+                    <ShoppingBag className="text-secundary cursor-pointer" onClick={() => { navigate('/carrinho') }} />
                     <User className="text-secundary cursor-pointer" onClick={() => { navigate('/login') }} />
                 </div>
             </nav>

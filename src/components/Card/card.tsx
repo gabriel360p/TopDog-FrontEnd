@@ -12,9 +12,11 @@ interface ProductCard {
     offer?: boolean;
     icon?: ReactNode;
     product: Product
+    onClick?: () => void
+
 }
 
-const Card = ({ product, photo, title, description, offer, icon, price, ...rest }: ProductCard) => {
+const Card = ({ onClick, product, photo, title, description, icon, price, }: ProductCard) => {
     const { add } = useCart()
     const [timout, setTimout] = useState<boolean>(false)
 
@@ -33,24 +35,30 @@ const Card = ({ product, photo, title, description, offer, icon, price, ...rest 
     }
 
     return (
-        <div className="
-        flex flex-col justify-between
-        hover:-translate-y-2.5
-        hover:transition-all
-        bg-card-background 
-        rounded-xl
+        <>
+            <div
+                onClick={onClick}
+                className="
+                flex flex-col justify-between
+                hover:-translate-y-2.5
+                hover:transition-all
+                bg-card-background 
+                rounded-xl
 
-       
-        h-full
-        h-max-100
-        max-w-md
-        border
-         border-secundary/10">
+            
+                h-full
+                h-max-100
+                max-w-md
+                border
+                border-secundary/10"
+            >
 
-            <img
-                src={photo}
-                className={
-                    `
+                <img
+
+                    src={photo}
+                    className={
+                        `
+                    cursor-pointer
                     rounded-tl-xl
                     rounded-tr-xl
                     object-cover
@@ -58,20 +66,28 @@ const Card = ({ product, photo, title, description, offer, icon, price, ...rest 
                     h-50
                     md:w-full
                 `
-                } />
-            <div className="container-app">
-                <h3 className="text-center font-bold mb-2">{title}</h3>
-                <p className="font-medium text-gray-300/80 truncate md:overflow-visible md:whitespace-break-spaces">{description}</p>
-            </div>
-            <div className="container-app flex justify-between items-center">
-                <p className="font-bold text-lg">{`R$${price}`}</p>
-
-                <div onClick={() => { handleAddCart(product) }} className="bg-primary/25 rounded-lg p-1 flex items-center justify-center cursor-pointer">
-                    {timout ? (<Loader2 className="animate-spin" />) : icon}
+                    } />
+                <div className="container-app cursor-pointer">
+                    <h3 className="text-center font-bold mb-2">{title}</h3>
+                    <p className="font-medium text-gray-300/80 truncate md:overflow-visible md:whitespace-break-spaces">{description}</p>
                 </div>
+                <div className="container-app flex justify-between items-center border-t border-secundary/10 mt-2 pt-2">
+                    <p className="font-bold text-lg">{`R$${price}`}</p>
 
+                    <div
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            handleAddCart(product);
+                        }}
+                        className="bg-primary/25 rounded-lg p-1  active:translate-y-2 flex items-center justify-center cursor-pointer"
+                    >
+                        {timout ? (<Loader2 className="animate-spin" />) : icon}
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </>
+
     )
 }
 

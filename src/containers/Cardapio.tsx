@@ -1,6 +1,6 @@
 import Card from "../components/Card/card"
 // import photoExample from '../assets/hotdog-ex.jpg'
-import { PlusIcon, Search } from "lucide-react"
+import { Search, ShoppingBag } from "lucide-react"
 import { Input } from "../components/Input/input"
 import { Header } from "../components/Header/Header"
 import { products as produtos } from "../services/ProductService"
@@ -9,9 +9,12 @@ import { BadgeCategories } from "../components/Badges/BadgeCategories"
 import { useEffect, useState } from "react"
 import type { Product } from "../types/ProductType"
 import type { Categorie } from "../types/CategoriesType"
+import { Modal } from "../components/Modal/Modal"
+
 export const Cardapio = () => {
     const [products, setProducts] = useState<Product[]>(produtos);
     const [filterProducts, setFilterProducts] = useState<Product[]>(produtos);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     function handleFilterSearch(event: React.ChangeEvent<HTMLInputElement>) {
         const filter = products.filter(product => product.title.toLowerCase().includes(event.target.value.toLowerCase()))
@@ -91,6 +94,7 @@ export const Cardapio = () => {
                 </div>
 
                 <div className="
+                
                 grid
                 w-full 
                 grid-cols-2 gap-x-3 gap-y-4
@@ -98,11 +102,28 @@ export const Cardapio = () => {
                 xl:grid-cols-5 xl:place-items-center
                 ">
                     {filterProducts.map(product => (
-                        <Card key={product.id} offer={product.offer} product={product} title={product.title} price={product.price} photo={product.photo} icon={<PlusIcon size={36} className="text-secundary" />} description={product.description} />
+                        <Card
+                            key={product.id}
+                            offer={product.offer}
+                            product={product}
+                            title={product.title}
+                            price={product.price}
+                            photo={product.photo}
+                            icon={<ShoppingBag size={30} className="text-secundary " />}
+                            description={product.description}
+                            onClick={() => { setSelectedProduct(product) }}
+                        />
                     ))}
 
                 </div>
             </div>
+
+            {selectedProduct && (
+                <Modal
+                    data={selectedProduct}
+                    onClose={() => { setSelectedProduct(null) }}
+                />
+            )}
         </>
     )
 }

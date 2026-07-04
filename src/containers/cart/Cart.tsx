@@ -88,12 +88,12 @@ export const Cart = () => {
                             </div>
                             <div className="flex w-full flex-col gap-2 mt-2">
                                 <div className="flex items-center w-full justify-between text-gray-400 text-[13px]">
-                                    <p>Subtotal:</p>
-                                    <p>R${totalValor}</p>
+                                    <p className="text-[18px]">Subtotal:</p>
+                                    <p className="text-[16px]">R${totalValor}</p>
                                 </div>
                                 <div className="flex items-center w-full justify-between text-gray-400 text-[13px]">
-                                    <p>Taxa de Entrega:</p>
-                                    <p>R$5</p>
+                                    <p className="text-[14px]">Taxa de Entrega:</p>
+                                    <p className="text-[16px]">R$5</p>
                                 </div>
                             </div>
 
