@@ -7,7 +7,16 @@ function App() {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        draggable
+        theme="dark"
+      />
       <Roteamento />
     </>
   )

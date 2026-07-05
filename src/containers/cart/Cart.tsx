@@ -12,6 +12,8 @@ import { TypesButton } from "../../components/Button/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CartFormValidation } from "../../YupSchemas/CartFormValidation";
 import { v4 as uuidv4 } from 'uuid';
+import { newOrder } from "../../services/OrderServices";
+import { toast } from "react-toastify";
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -36,7 +38,7 @@ export const Cart = () => {
         resolver: yupResolver(CartFormValidation)
     })
 
-    const onSubmit = handleSubmit((data) => {
+    const onSubmit = handleSubmit(async (data) => {
 
         if (cart.length <= 0) {
             alert("O carrinho está vazio")
@@ -56,12 +58,15 @@ export const Cart = () => {
                 createdAt: new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, -1) + '-03:00',
             }
 
-            console.log(order)
+            const response = await newOrder(order)
+            // console.log(response)
+            toast.success("Pedido criado com sucesso")
+
+            //a partir desse ponto, posso começar a tratar a diminuição de produtos do estoque, por exemplo.
+
         }
     })
-    useEffect(() => {
-        console.log(errors)
-    }, [errors])
+
     return (
         <>
             <div className="h-[90px]"></div>
