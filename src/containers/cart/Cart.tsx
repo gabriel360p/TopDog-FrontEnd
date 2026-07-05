@@ -6,6 +6,12 @@ import { Button } from "../../components/Button/Button";
 import { BanknoteArrowUp, Contact, Locate, Lock, Paperclip } from "lucide-react";
 import { Input } from "../../components/Input/input";
 import { TypeInput } from "../../components/Input/types";
+import { useForm } from "react-hook-form"
+import type { FormCartType } from "../../types/FormCartType";
+import { TypesButton } from "../../components/Button/types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { CartFormValidation } from "../../YupSchemas/CartFormValidation";
+import { v4 as uuidv4 } from 'uuid';
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -16,7 +22,6 @@ export const Cart = () => {
     const [checkedPaymentMethod, setCheckedPaymentMethod] = useState<boolean>(true);
     const [methodMoney, setMethodMoney] = useState<boolean>(false);
 
-
     function handlePaymentMethod({ target }: React.ChangeEvent<HTMLSelectElement, HTMLSelectElement>) {
         if (target.value === "money") { setMethodMoney(true) } else { setMethodMoney(false) }
     }
@@ -24,6 +29,39 @@ export const Cart = () => {
     useEffect(() => {
         setTotalValue(total())
     }, [cart])
+
+
+
+    const { register, setValue, handleSubmit, formState: { errors }, } = useForm<FormCartType>({
+        resolver: yupResolver(CartFormValidation)
+    })
+
+    const onSubmit = handleSubmit((data) => {
+
+        if (cart.length <= 0) {
+            alert("O carrinho está vazio")
+            return;
+        }
+
+        const confirmed = window.confirm("Confirmar pedido?");
+        if (confirmed) {
+            //aqui nesse ponto é quando vamos mandar os dados para o back
+            //estamos pegando os items do carrinho, o formulário de informações
+            //e pegando o formulário de observações
+
+            const order = {
+                orderId: "PEDIDO-" + uuidv4().replace(/-/g, "").slice(0, 8).toUpperCase(),
+                formData: data,
+                cartItems: cart,
+                createdAt: new Date(new Date().getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, -1) + '-03:00',
+            }
+
+            console.log(order)
+        }
+    })
+    useEffect(() => {
+        console.log(errors)
+    }, [errors])
     return (
         <>
             <div className="h-[90px]"></div>
@@ -61,10 +99,13 @@ export const Cart = () => {
                     </div>
                     {cart.length > 0 ? (
                         <div className="flex flex-col gap-1 px-4 mb-3 mt-auto pt-3">
-                            <label htmlFor="observation" className="text-[12px] text-gray-400">Alguma observação sobre seu pedido?</label>
-                            <textarea rows={4} spellCheck maxLength={120} id='observation' placeholder="Ex: Sem cebola..." name="" className="border py-2 px-2 border-secundary rounded-2xl">
+                            <label htmlFor="" className="text-[12px] text-gray-400">Alguma observação sobre seu pedido?</label>
+                            <textarea {...register('observation')} rows={4} spellCheck maxLength={120} id='observation' placeholder="Ex: Sem cebola..." className="border py-2 px-2 border-secundary rounded-2xl">
 
                             </textarea>
+                            {errors.observation?.message && (
+                                <span className="text-red-600 font-bold text-[14px] py-1">{errors.observation?.message}</span>
+                            )}
                         </div>
                     ) : (<></>)}
                 </div>
@@ -79,7 +120,7 @@ export const Cart = () => {
                     h-fit
                     max-w-4xl
                 ">
-                    <form action="">
+                    <form onSubmit={onSubmit}>
 
                         <div className="w-full h-fit flex flex-col p-4">
                             <div className="flex gap-3 min-w-[290px]">
@@ -109,12 +150,15 @@ export const Cart = () => {
                                 md:grid-cols-2 gap-2
                                 ">
                                         <div className="flex flex-col gap-2">
-                                            <Input fullWidth label="Rua" placeholder="Rua" required />
-                                            <Input fullWidth label="Bairro" placeholder="Bairro" required />
+                                            {/* 
+                                                Register cria uma ref, que estamos recebendo essa ref la no input
+                                            */}
+                                            <Input error={errors.street?.message} type={TypeInput.TEXT} {...register("street")} fullWidth label="Rua" placeholder="Rua" />
+                                            <Input error={errors.neighborhood?.message} type={TypeInput.TEXT} {...register("neighborhood")} fullWidth label="Bairro" placeholder="Bairro" />
                                         </div>
                                         <div className="flex flex-col gap-2">
-                                            <Input fullWidth label="Número" placeholder="Numero" required />
-                                            <Input fullWidth label="Complemento" placeholder="Complemento" />
+                                            <Input error={errors.number?.message} type={TypeInput.NUMBER} {...register("number")} fullWidth label="Número" placeholder="Numero" />
+                                            <Input error={errors.address2?.message} type={TypeInput.TEXT} {...register("address2")} fullWidth label="Complemento" placeholder="Complemento" />
 
                                         </div>
                                     </div>
@@ -124,11 +168,11 @@ export const Cart = () => {
                             <div className="flex flex-col gap-2 justify-center items-start mt-4">
                                 <p>Forma de entrega</p>
                                 <div className="flex gap-2">
-                                    <input type="radio" id="to-leave" name="delivery" onClick={() => { setChecked(!checked) }} />
+                                    <input {...register("delivery")} value="true" type="radio" id="to-leave" name="delivery" onClick={() => { setChecked(!checked) }} />
                                     <label htmlFor="to-leave">Entrega - 45 a 60 minutos</label>
                                 </div>
                                 <div className="flex gap-2">
-                                    <input type="radio" id="pick-up" checked={checked} onClick={() => { setChecked(!checked) }} name="delivery" />
+                                    <input {...register("delivery")} value="false" type="radio" id="pick-up" checked={checked} onClick={() => { setChecked(!checked) }} name="delivery" />
                                     <label htmlFor="pick-up">Retirada - 15 a 20 minutoa</label>
                                 </div>
                             </div>
@@ -140,7 +184,7 @@ export const Cart = () => {
                                     <Contact size={28} className="text-secundary" />
                                     <h2 className="font-bold">Contato </h2>
                                 </div>
-                                <Input fullWidth label="Número para contato" placeholder="9-99999999" required type={TypeInput.TEL} />
+                                <Input error={errors.phone?.message}  {...register("phone")} fullWidth label="Número para contato" placeholder="9-99999999" type={TypeInput.TEL} />
                             </div>
 
                             <hr className="opacity-15 text-secundary mt-2 mb-2" />
@@ -150,29 +194,31 @@ export const Cart = () => {
                                     <BanknoteArrowUp size={28} className="text-secundary" />
                                     <h2 className="font-bold">Forma de pagamento </h2>
                                 </div>
-                                <select name="" id="category" onChange={(e) => { handlePaymentMethod(e) }} className="border border-secundary rounded-2xl py-2 ps-5 w-full">
+                                <select  {...register("payment_method")} id="category" onChange={(e) => { handlePaymentMethod(e) }} className="border border-secundary rounded-2xl py-2 ps-5 w-full">
                                     <option value="pix" selected>Pix</option>
                                     <option value="money">Dinheiro em espécie</option>
                                     <option value="debit">Cartão de Débito</option>
                                     <option value="credit">Cartão de Crédito</option>
                                 </select>
-
+                                {errors.payment_method?.message && (
+                                    <span className="text-red-600 font-bold text-[14px] py-1">{errors.payment_method?.message}</span>
+                                )}
                                 {methodMoney && (
 
                                     <div className="flex flex-col min-w-full gap-2">
                                         <div className="flex flex-col gap-2 justify-center items-start mt-4">
                                             <p>Preciso de troco?</p>
                                             <div className="flex gap-2">
-                                                <input type="radio" id="yes" name="minmony" onClick={() => { setCheckedPaymentMethod(!checkedPaymentMethod) }} />
+                                                <input {...register("needChange")} value="true" type="radio" id="yes" name="minmony" onClick={() => { setCheckedPaymentMethod(!checkedPaymentMethod) }} />
                                                 <label htmlFor="yes">Sim</label>
                                             </div>
                                             <div className="flex gap-2">
-                                                <input type="radio" id="no" checked={checkedPaymentMethod} onClick={() => { setCheckedPaymentMethod(!checkedPaymentMethod) }} name="minmony" />
+                                                <input {...register("needChange")} value="false" type="radio" id="no" checked={checkedPaymentMethod} onClick={() => { setCheckedPaymentMethod(!checkedPaymentMethod) }} name="minmony" />
                                                 <label htmlFor="no">Não</label>
                                             </div>
                                         </div>
                                         {!checkedPaymentMethod && (
-                                            <Input fullWidth label="Troco para quanto?" placeholder="Troco para quanto" type={TypeInput.NUMBER} min={+1} />
+                                            <Input error={errors.change?.message} {...register("change")} fullWidth label="Troco para quanto?" placeholder="Troco para quanto" type={TypeInput.NUMBER} min={+1} required />
                                         )}
                                     </div>
                                 )}
@@ -180,7 +226,7 @@ export const Cart = () => {
                             </div>
 
                             <div className="flex items-center mt-4">
-                                <Button title="Finalizar pedido" fullWidth stylesClass="normal-button bg-secundary" onClick={() => { navigate('/') }} />
+                                <Button title="Finalizar pedido" type={TypesButton.SUBMIT} fullWidth stylesClass="normal-button bg-secundary" />
                             </div>
                         </div>
                     </form>

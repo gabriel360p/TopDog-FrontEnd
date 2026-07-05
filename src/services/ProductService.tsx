@@ -10,6 +10,7 @@ export const products: Product[] = [
         description: "Batatas Fritas no óleo",
         offer: false,
         categorieId: 2,
+        storage: 99999,
         categorieName: "Fritas",
     },
     {
@@ -21,6 +22,7 @@ export const products: Product[] = [
         offer: false,
         categorieId: 1,
         categorieName: "Hotdogs",
+        storage: 99999,
     },
     {
         id: 3,
@@ -30,6 +32,7 @@ export const products: Product[] = [
         description: "Molho de acompanhamento de abacaxi",
         offer: false,
         categorieId: 3,
+        storage: 99999,
         categorieName: "Molhos",
     },
     {
@@ -40,6 +43,7 @@ export const products: Product[] = [
         description: "Refrigerante coca-cola lata 350ml tradicional",
         offer: false,
         categorieId: 4,
+        storage: 99999,
         categorieName: "Refrigerantes",
     },
     {
@@ -50,6 +54,7 @@ export const products: Product[] = [
         description: "Suco de manga tamanho P de 150ml",
         offer: false,
         categorieId: 5,
+        storage: 99999,
         categorieName: "Sucos",
     },
 ]

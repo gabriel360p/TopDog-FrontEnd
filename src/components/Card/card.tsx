@@ -38,7 +38,7 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
         <>
             <div
                 onClick={onClick}
-                className="
+                className={`
                 flex flex-col justify-between
                 hover:-translate-y-2.5
                 hover:transition-all
@@ -50,7 +50,7 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
                 h-max-100
                 max-w-md
                 border
-                border-secundary/10"
+                border-secundary/10`}
             >
 
                 <img

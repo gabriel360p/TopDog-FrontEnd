@@ -13,7 +13,7 @@ export const Button = ({ type, stylesClass, title, fullWidth, ...rest }: ButtonP
 
 
     return (
-        <button type={type ? 'button' : type} {...rest} className={`
+        <button {...rest} className={`
             object-cover 
             ${fullWidth ? 'w-full' : ''}
 

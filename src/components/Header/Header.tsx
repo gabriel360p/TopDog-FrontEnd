@@ -22,7 +22,7 @@ export const Header = () => {
                         alt="logo-hotdog" />
                 </div>
                 <div className="flex items-center gap-4 justify-end">
-                    <ShoppingBag className="text-secundary cursor-pointer" onClick={() => { navigate('/carrinho') }} />
+                    <ShoppingBag className="text-secundary cursor-pointer active:-translate-y-2" onClick={() => { navigate('/carrinho') }} />
                     <User className="text-secundary cursor-pointer" onClick={() => { navigate('/login') }} />
                 </div>
             </nav>

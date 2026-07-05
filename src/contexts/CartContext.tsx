@@ -22,16 +22,20 @@ export const CartProvider = ({ children }) => {
     function plus(product: Product): void {
         const founded = cart.find(item => item.id === product.id)
         if (founded !== undefined) {
-            const cartUpdate = cart.map((item) => {
-                if (item.id === product.id) {
-                    return {
-                        ...item,
-                        quantity: item.quantity + 1,
+            if (product.storage > 0) {
+                const cartUpdate = cart.map((item) => {
+                    if (item.id === product.id) {
+                        return {
+                            ...item,
+                            quantity: item.quantity + 1,
+                        }
                     }
-                }
-                return item;
-            })
-            setCart(cartUpdate)
+                    return item;
+                })
+                setCart(cartUpdate)
+            }
+        } else {
+            console.log("Estoque insuficiente")
         }
 
     }
@@ -71,27 +75,33 @@ export const CartProvider = ({ children }) => {
                 verificando se o produto ja esta no carrinho, se sim, ele pega o objeto, acessa a propriedade quantity, adiciona mais 1
                 e retorna. Se o objeto não for aquele com id que esta tentando ser adicionado novamente, ele só retorna sem modificar nada.
             */
-            const cartUpdate = cart.map((item) => {
-                if (item.id === product.id) {
-                    return {
-                        ...item,
-                        quantity: item.quantity + 1,
-                    }
-                }
-                return item;
-            })
 
-            setCart(cartUpdate)
-            // console.log("te achei", cartUpdate)
-        } else {
-            //se o produto não existe no carrinho ele adiciona
-            const newProduct: Product = {
-                ...product,
-                //tem 1 desse item
-                quantity: 1,
+            if (product.storage > 0) {
+                /*
+                    Verificando se tem estoque do produto
+                */
+                const cartUpdate = cart.map((item) => {
+                    if (item.id === product.id) {
+                        return {
+                            ...item,
+                            quantity: item.quantity + 1,
+                        }
+                    }
+                    return item;
+                })
+
+                setCart(cartUpdate)
+                // console.log("te achei", cartUpdate)
+            } else {
+                //se o produto não existe no carrinho ele adiciona
+                const newProduct: Product = {
+                    ...product,
+                    //tem 1 desse item
+                    quantity: 1,
+                }
+                setCart(prev => [...prev, newProduct])
+                // console.log(newProduct)
             }
-            setCart(prev => [...prev, newProduct])
-            // console.log(newProduct)
         }
     }
     function erease(product: Product): void {

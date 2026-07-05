@@ -7,5 +7,6 @@ export interface Product {
     description?: string;
     offer?: boolean;
     categorieId: number;
+    storage: number;
     categorieName: string;
 }
