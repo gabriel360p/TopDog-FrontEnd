@@ -1,6 +1,6 @@
 import { Button } from "../../components/Button/Button"
 import { Input } from "../../components/Input/input"
-import Logo from '../../assets/logo2.jpg'
+import Logo from '../../assets/top-dog.png'
 import { TypeInput } from "../../components/Input/types"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -14,15 +14,6 @@ export const Login = () => {
             md:min-w-lg
             lg:min-w-xl
             ">
-                <img src={Logo}
-                    onClick={() => { navigate('/') }}
-                    className="
-                    object-cover
-                    w-full max-w-xl
-                    h-full
-                            "
-                    alt="logo-hotdog" />
-
                 <h1 className="text-center text-2xl">Login</h1>
 
                 <form action="" className="flex flex-col gap-1 justify-center items-center">

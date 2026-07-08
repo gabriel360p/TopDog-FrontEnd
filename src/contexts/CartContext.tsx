@@ -9,6 +9,11 @@ interface cartContext {
     total: () => number,
 }
 
+export interface discountTotal {
+    discount?: boolean;
+    valueDiscount?: number;
+}
+
 const CartContext = createContext<cartContext | null>(null);
 
 export const CartProvider = ({ children }) => {
@@ -114,15 +119,14 @@ export const CartProvider = ({ children }) => {
     }
 
     function total(): number {
-        const total: number = cart.reduce((acc, value, currentIndex) => {
-            return acc + (cart[currentIndex].price * cart[currentIndex].quantity);
-        }, 0)
-        return total > 0 ? total : 0;
-    }
 
-    useEffect(() => {
-        total()
-    }, [cart])
+        const total = cart.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+
+        return total > 0 ? total : 0;
+
+    }
 
     return (
         <CartContext.Provider value={{ cart, add, erease, remove, plus, update, total }}>

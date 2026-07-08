@@ -1,0 +1,1 @@
+export const delivery_rate: number = 7;
