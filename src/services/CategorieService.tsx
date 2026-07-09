@@ -24,6 +24,10 @@ const categories: Categorie[] = [
         id: 5,
         name: "Sucos",
     },
+    {
+        id: 6,
+        name: "Combos",
+    },
 ]
 
 

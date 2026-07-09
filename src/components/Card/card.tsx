@@ -63,13 +63,20 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
                     rounded-tr-xl
                     object-cover
                     w-full
-                    h-50
+                    h-40
+                    md:h-50
                     md:w-full
                 `
                     } />
                 <div className="container-app cursor-pointer">
-                    <h3 className="text-center font-bold mb-2">{title}</h3>
-                    <p className="font-medium text-gray-300/80 truncate md:overflow-visible md:whitespace-break-spaces">{description}</p>
+                    <h3 className="text-center 
+                    text-[13px]
+                    md:text-[15px]
+                     font-bold mb-2">{title}</h3>
+                    <p className="font-medium 
+                    text-[11px]
+                    md:text-[13px]
+                     text-gray-300/80 truncate md:overflow-visible md:whitespace-break-spaces">{description}</p>
                 </div>
                 <div className="container-app flex justify-between items-center border-t border-secundary/10 mt-2 pt-2">
                     <p className="font-bold text-lg">{`R$${price}`}</p>

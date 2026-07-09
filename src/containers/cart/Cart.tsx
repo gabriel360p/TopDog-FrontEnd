@@ -10,12 +10,13 @@ import { useForm } from "react-hook-form"
 import type { FormCartType } from "../../types/FormCartType";
 import { TypesButton } from "../../components/Button/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CartFormValidation } from "../../YupSchemas/CartFormValidation";
+import { CartFormValidation, CartFormValidation2 } from "../../YupSchemas/CartFormValidation";
 import { v4 as uuidv4 } from 'uuid';
 import { newOrder } from "../../services/OrderServices";
 import { toast } from "react-toastify";
 import { sendMessage } from "../../utils/sendMessageWpp";
 import { delivery_rate } from "../../global/GlobalValues";
+import { MapLocation } from "../../components/Map/MapLocation";
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -24,7 +25,6 @@ export const Cart = () => {
     const [checked, setChecked] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [pickup, setPickup] = useState<string>("");
 
     const [checkedPaymentMethod, setCheckedPaymentMethod] = useState<boolean>(true);
     const [methodMoney, setMethodMoney] = useState<boolean>(false);
@@ -37,10 +37,8 @@ export const Cart = () => {
         setTotalValue(total())
     }, [cart])
 
-
-
     const { register, setValue, handleSubmit, formState: { errors }, } = useForm<FormCartType>({
-        resolver: yupResolver(CartFormValidation)
+        resolver: yupResolver(!checked ? CartFormValidation : CartFormValidation2)
     })
 
     const onSubmit = handleSubmit(async (data) => {
@@ -49,8 +47,6 @@ export const Cart = () => {
             alert("O carrinho está vazio")
             return;
         }
-
-        setPickup(data.delivery)
 
         const confirmed = window.confirm("Confirmar pedido?");
         if (confirmed) {
@@ -156,7 +152,7 @@ export const Cart = () => {
                             </div>
                             <div className="flex w-full flex-col gap-2 mt-2">
                                 <div className="flex items-center w-full justify-between text-gray-400 text-[13px]">
-                                    <p className="text-[18px]">Subtotal:</p>
+                                    <p className="text-[14px]">Subtotal:</p>
                                     <p className="text-[16px]">R${totalValor}</p>
                                 </div>
 
@@ -164,39 +160,53 @@ export const Cart = () => {
                                     <p className="text-[14px]">Taxa de Entrega:</p>
                                     <p className="text-[16px]">R${delivery_rate}</p>
                                 </div>
+                                <div className="flex items-center w-full justify-between text-gray-400 text-[13px]">
+                                    <p className="text-[18px]">Total:</p>
+                                    <p className="text-[16px]">R$
+                                        {
+                                            !checked ? totalValor + delivery_rate : totalValor
+                                        }
+                                    </p>
+                                </div>
+
                             </div>
 
                             <hr className="opacity-15 text-secundary mt-2 mb-2" />
-                            <div>
-                                <div className="flex justify-start items-center gap-2 mt-4">
-                                    <Locate size={28} className="text-secundary" />
-                                    <h2 className="font-bold"> Entrega </h2>
-                                </div>
+                            {!checked ? (
 
-                                <div className="flex flex-col gap-2 mt-4">
-                                    <div className="grid grid-cols-1 
-                                md:grid-cols-2 gap-2
-                                ">
-                                        <div className="flex flex-col gap-2">
-                                            {/* 
+                                <div>
+                                    <div className="flex justify-start items-center gap-2 mt-4">
+                                        <Locate size={28} className="text-secundary" />
+                                        <h2 className="font-bold"> Entrega </h2>
+                                    </div>
+
+                                    <div className="flex flex-col gap-2 mt-4">
+                                        <div className="grid grid-cols-1 
+                                            md:grid-cols-2 gap-2
+                                            ">
+                                            <div className="flex flex-col gap-2">
+                                                {/* 
                                                 Register cria uma ref, que estamos recebendo essa ref la no input
                                             */}
-                                            <Input error={errors.street?.message} type={TypeInput.TEXT} {...register("street")} fullWidth label="Rua" placeholder="Rua" />
-                                            <Input error={errors.neighborhood?.message} type={TypeInput.TEXT} {...register("neighborhood")} fullWidth label="Bairro" placeholder="Bairro" />
-                                        </div>
-                                        <div className="flex flex-col gap-2">
-                                            <Input error={errors.number?.message} type={TypeInput.NUMBER} {...register("number")} fullWidth label="Número" placeholder="Numero" />
-                                            <Input error={errors.address2?.message} type={TypeInput.TEXT} {...register("address2")} fullWidth label="Complemento" placeholder="Complemento" />
+                                                <Input error={errors.street?.message} type={TypeInput.TEXT} {...register("street")} fullWidth label="Rua" placeholder="Rua" />
+                                                <Input error={errors.neighborhood?.message} type={TypeInput.TEXT} {...register("neighborhood")} fullWidth label="Bairro" placeholder="Bairro" />
+                                            </div>
+                                            <div className="flex flex-col gap-2">
+                                                <Input error={errors.number?.message} type={TypeInput.NUMBER} {...register("number")} fullWidth label="Número" placeholder="Numero" />
+                                                <Input error={errors.address2?.message} type={TypeInput.TEXT} {...register("address2")} fullWidth label="Complemento" placeholder="Complemento" />
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            ) : (
+                                <MapLocation />
+                            )}
 
                             <div className="flex flex-col gap-2 justify-center items-start mt-4">
                                 <p>Forma de entrega</p>
                                 <div className="flex gap-2">
-                                    <input {...register("delivery")} value="entrega" type="radio" id="to-leave" name="delivery" onClick={() => { setChecked(!checked) }} />
+                                    <input  {...register("delivery")} value="entrega" type="radio" id="to-leave" name="delivery" onClick={() => { setChecked(!checked) }} />
                                     <label htmlFor="to-leave">Entrega - 45 a 60 minutos</label>
                                 </div>
                                 <div className="flex gap-2">

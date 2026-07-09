@@ -1,9 +1,15 @@
-import { Phone, ShoppingBag, ShoppingCart, User } from "lucide-react"
+import { Phone, ShoppingBag, ShoppingCart, User, WineOff } from "lucide-react"
 import Logo from '../../assets/top-dog.png'
 import { useNavigate } from "react-router-dom"
 import { sendMessage } from "../../utils/sendMessageWpp"
 export const Header = () => {
     const navigate = useNavigate()
+    function redirect() {
+        if (window.confirm("Deseja conversar conosco?")) {
+            window.location.href = `https://wa.me/5584996333501?text=${encodeURIComponent("Olá! Gostaria de mais informações.")}`;
+        }
+    }
+
     return (
         <header className="bg-background-header fixed z-[5] min-w-full py-2">
             <nav className="
@@ -22,14 +28,15 @@ export const Header = () => {
                             "
                         alt="logo-hotdog" />
                 </div>
-                <div className="flex items-center gap-4 justify-end">
-                    <a href={`https://wa.me/5584996333501?text=${encodeURIComponent("Olá! Gostaria de mais informações.")}`}>
+                <div className="flex items-center gap-5 justify-end">
+
+                    <div onClick={() => { redirect() }}>
                         <Phone className="text-secundary cursor-pointer active:-translate-y-2" />
-                    </a>
+                    </div >
                     <ShoppingBag className="text-secundary cursor-pointer active:-translate-y-2" onClick={() => { navigate('/carrinho') }} />
-                    <User className="text-secundary cursor-pointer opacity-0" onClick={() => { navigate('/login') }} />
-                </div>
-            </nav>
-        </header>
+                    {/* <User className="text-secundary cursor-pointer opacity-0" onClick={() => { navigate('/login') }} /> */}
+                </div >
+            </nav >
+        </header >
     )
 }

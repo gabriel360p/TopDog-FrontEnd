@@ -93,15 +93,17 @@ export const Cardapio = () => {
                     )}
                 </div>
 
-                <div className="
+                <div className={`
                 
-                grid
+                ${filterProducts.length > 0 ? "grid" : `
+                flex justify-center
+                `}
                 w-full 
                 grid-cols-2 gap-x-3 gap-y-4
                 md:grid-cols-3
                 xl:grid-cols-5 xl:place-items-center
-                ">
-                    {filterProducts.map(product => (
+                `}>
+                    {filterProducts.length > 0 ? filterProducts.map(product => (
                         <Card
                             key={product.id}
                             offer={product.offer}
@@ -113,12 +115,16 @@ export const Cardapio = () => {
                             description={product.description}
                             onClick={() => { setSelectedProduct(product) }}
                         />
-                    ))}
+                    )) : (
+                        <div className="
+
+                        ">
+
+                            <p className="block">Produtos ou Combos indisponivéis no momento!</p>
+                        </div>
+                    )}
 
                 </div>
-            </div>
-            <div className="fixed z-15 inset-0 top-15">
-                whatsapp
             </div>
             {selectedProduct && (
                 <Modal
