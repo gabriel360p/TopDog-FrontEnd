@@ -38,9 +38,7 @@ Obrigado pela preferência!
 
     `;
 
-    const telefone = import.meta.env.VITE_CONTACT_NUMBER;
-
+    const telefone = "5584996333501"
     const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-
     window.location.assign(url);
 }

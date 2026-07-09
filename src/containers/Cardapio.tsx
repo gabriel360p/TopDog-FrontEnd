@@ -117,7 +117,9 @@ export const Cardapio = () => {
 
                 </div>
             </div>
-
+            <div className="fixed z-15 inset-0 top-15">
+                whatsapp
+            </div>
             {selectedProduct && (
                 <Modal
                     data={selectedProduct}

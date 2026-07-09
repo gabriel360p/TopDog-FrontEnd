@@ -24,6 +24,8 @@ export const Cart = () => {
     const [checked, setChecked] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [pickup, setPickup] = useState<string>("");
+
     const [checkedPaymentMethod, setCheckedPaymentMethod] = useState<boolean>(true);
     const [methodMoney, setMethodMoney] = useState<boolean>(false);
 
@@ -47,6 +49,8 @@ export const Cart = () => {
             alert("O carrinho está vazio")
             return;
         }
+
+        setPickup(data.delivery)
 
         const confirmed = window.confirm("Confirmar pedido?");
         if (confirmed) {
@@ -155,6 +159,7 @@ export const Cart = () => {
                                     <p className="text-[18px]">Subtotal:</p>
                                     <p className="text-[16px]">R${totalValor}</p>
                                 </div>
+
                                 <div className="flex items-center w-full justify-between text-gray-400 text-[13px]">
                                     <p className="text-[14px]">Taxa de Entrega:</p>
                                     <p className="text-[16px]">R${delivery_rate}</p>
@@ -275,6 +280,8 @@ export const Cart = () => {
                     <Loader2 className="animate-spin" />
                 </div>
             )}
+
+
         </>
 
     )
