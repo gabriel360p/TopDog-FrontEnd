@@ -1,6 +1,5 @@
 import { Button } from "../../components/Button/Button"
 import { Input } from "../../components/Input/input"
-import Logo from '../../assets/top-dog.png'
 import { TypeInput } from "../../components/Input/types"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"

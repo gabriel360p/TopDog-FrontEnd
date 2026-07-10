@@ -13,15 +13,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CartFormValidation, CartFormValidation2 } from "../../YupSchemas/CartFormValidation";
 import { v4 as uuidv4 } from 'uuid';
 import { newOrder } from "../../services/OrderServices";
-import { toast } from "react-toastify";
-import { sendMessage } from "../../utils/sendMessageWpp";
 import { delivery_rate } from "../../global/GlobalValues";
 import { MapLocation } from "../../components/Map/MapLocation";
 
 export const Cart = () => {
     const navigate = useNavigate();
     const { cart, total } = useCart();
-    const [totalValor, setTotalValue] = useState<number>();
+    const [totalValor, setTotalValue] = useState<number>(0);
     const [checked, setChecked] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -34,10 +32,11 @@ export const Cart = () => {
     }
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTotalValue(total())
     }, [cart])
 
-    const { register, setValue, handleSubmit, formState: { errors }, } = useForm<FormCartType>({
+    const { register, handleSubmit, formState: { errors }, } = useForm<FormCartType>({
         resolver: yupResolver(!checked ? CartFormValidation : CartFormValidation2)
     })
 
@@ -71,6 +70,7 @@ export const Cart = () => {
 
             // console.log(order)
             setLoading(true)
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const response = await newOrder(order)
             // console.log(response)
             setLoading(false)

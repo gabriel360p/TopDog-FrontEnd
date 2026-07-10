@@ -1,11 +1,15 @@
 import type { Categorie } from "../../types/CategoriesType";
+
 interface TypeCategorie {
     categorie: Categorie;
+    onClick: React.MouseEventHandler<HTMLSpanElement>
 }
-export const BadgeCategories = ({ categorie, ...rest }: TypeCategorie) => {
+
+export const BadgeCategories = ({ onClick, categorie, ...rest }: TypeCategorie) => {
     return (
         <span
             {...rest}
+            onClick={onClick}
             className={`
         w-fit h-fit p-1 
         border rounded-2xl

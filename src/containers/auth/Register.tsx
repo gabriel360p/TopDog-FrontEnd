@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom"
 import { Button } from "../../components/Button/Button"
 import { Input } from "../../components/Input/input"
 import { TypeInput } from "../../components/Input/types"
 
 export const Register = () => {
+    const navigate = useNavigate();
     return (
         <>
             <div className="flex items-center justify-center">

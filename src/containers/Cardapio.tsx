@@ -32,6 +32,7 @@ export const Cardapio = () => {
         setFilterProducts(filter)
     }
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setFilterProducts(produtos)
         setProducts(produtos)
     }, [])

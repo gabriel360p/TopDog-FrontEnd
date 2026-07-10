@@ -1,11 +1,14 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState, type PropsWithChildren } from "react";
 import type { Product } from "../types/ProductType";
 
 
 interface cartContext {
-    // cart: Product[],
-    add: (product: cartContext) => void,
-    remove: (product: cartContext) => void,
+    cart: Product[],
+    add: (product: Product) => void,
+    plus: (product: Product) => void,
+    erease: (product: Product) => void,
+    update: (product: Product[]) => void,
+    remove: (product: Product) => void,
     total: () => number,
 }
 
@@ -16,9 +19,8 @@ export interface discountTotal {
 
 const CartContext = createContext<cartContext | null>(null);
 
-export const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }: PropsWithChildren) => {
     const [cart, setCart] = useState<Product[]>([]);
-    const [timout, setTimout] = useState<boolean>(false);
 
 
     //configurar descontos, uma array de objetos - nome do desconto e valor
@@ -32,7 +34,7 @@ export const CartProvider = ({ children }) => {
                     if (item.id === product.id) {
                         return {
                             ...item,
-                            quantity: item.quantity + 1,
+                            quantity: item.quantity ? + 1 : 0,
                         }
                     }
                     return item;
@@ -61,7 +63,7 @@ export const CartProvider = ({ children }) => {
                     if (item.id === product.id) {
                         return {
                             ...item,
-                            quantity: item.quantity - 1,
+                            quantity: item.quantity ? - 1 : 0,
                         }
                     }
                     return item;
@@ -91,7 +93,7 @@ export const CartProvider = ({ children }) => {
                     if (item.id === product.id) {
                         return {
                             ...item,
-                            quantity: item.quantity + 1,
+                            quantity: item.quantity ? + 1 : 0,
                         }
                     }
                     return item;
@@ -126,7 +128,7 @@ export const CartProvider = ({ children }) => {
     function total(): number {
 
         const total = cart.reduce((acc, item) => {
-            return acc + (item.price * item.quantity);
+            return acc + (item.price * (item.quantity ? item.quantity : 0));
         }, 0);
 
         return total > 0 ? total : 0;
@@ -143,6 +145,7 @@ export const CartProvider = ({ children }) => {
 
 
 //Injetando/criando o CartContext no useCart Hook
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => {
     //criando o hook
     const context = useContext(CartContext)
