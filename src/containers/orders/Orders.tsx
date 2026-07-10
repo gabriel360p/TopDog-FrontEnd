@@ -1,10 +1,10 @@
-import { Table } from "../../components/Table/Table"
+// import { Table } from "../../components/Table/Table"
 
 
 export const Orders = () => {
     return (
         <>
-            <Table />
+            {/* <Table /> */}
 
         </>
     )

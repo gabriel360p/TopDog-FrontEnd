@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom"
-import { Footer } from "../../components/Footer/Footer"
+import { Navigate, Outlet, useLocation } from "react-router-dom"
 import { Sidebar } from "../../components/Sidebar/Sidebar"
 import { SidebarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ export const LayoutAdmin = () => {
     const [userAuth, setUserAuth] = useState<boolean>(false)
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsOpenOrCloseSide(false)
     }, [path])
 

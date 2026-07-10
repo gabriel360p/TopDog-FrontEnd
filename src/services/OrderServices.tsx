@@ -5,8 +5,7 @@ import { sendMessage } from "../utils/sendMessageWpp";
 
 export async function newOrder(data: CreateOrderType) {
     try {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const response = await api.post('/pedido', data)
+        await api.post('/pedido', data)
         // console.log(response)
         toast.success("Seu pedido está sendo processado!")
         alert("Estamos redirecionando para o nosso Whatsapp!")
