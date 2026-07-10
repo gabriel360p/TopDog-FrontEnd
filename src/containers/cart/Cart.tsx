@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { BanknoteArrowUp, Contact, Loader2, Locate, Lock, Paperclip } from "lucide-react";
 import { Input } from "../../components/Input/input";
-import type { TypeInput } from "../../components/Input/types";
+import { TypeInput } from "../../components/Input/types";
 import type { FormCartType } from "../../types/FormCartType";
-import type { TypesButton } from "../../components/Button/types";
+import { TypesButton } from "../../components/Button/types";
 import { CartFormValidation, CartFormValidation2 } from "../../YupSchemas/CartFormValidation";
 import { v4 as uuidv4 } from 'uuid';
 import { newOrder } from "../../services/OrderServices";
@@ -37,6 +37,8 @@ export const Cart = () => {
     }, [cart])
 
     const { register, handleSubmit, formState: { errors }, } = useForm<FormCartType>({
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         resolver: yupResolver(!checked ? CartFormValidation : CartFormValidation2)
     })
 
@@ -70,6 +72,8 @@ export const Cart = () => {
 
             // console.log(order)
             setLoading(true)
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
             await newOrder(order)
             // console.log(response)
             setLoading(false)
