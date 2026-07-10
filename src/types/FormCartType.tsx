@@ -1,8 +1,8 @@
 export interface FormCartType {
-    street: string;
-    number: number;
-    neighborhood: string;
-    address2: string;
+    street?: string;
+    number?: number;
+    neighborhood?: string;
+    address2?: string;
     phone: string;
     payment_method: string;
 
@@ -10,8 +10,8 @@ export interface FormCartType {
     delivery: string;
 
     // precisa de troco?
-    needChange: string;
+    needChange?: string;
     // valor do troco
-    change: string;
-    observation?: string;
+    change?: string;
+    observation?: string | undefined;
 }

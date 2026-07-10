@@ -5,16 +5,16 @@ import { useEffect, useState } from "react";
 import { Button } from "../../components/Button/Button";
 import { BanknoteArrowUp, Contact, Loader2, Locate, Lock, Paperclip } from "lucide-react";
 import { Input } from "../../components/Input/input";
-import { TypeInput } from "../../components/Input/types";
-import { useForm } from "react-hook-form"
+import type { TypeInput } from "../../components/Input/types";
 import type { FormCartType } from "../../types/FormCartType";
-import { TypesButton } from "../../components/Button/types";
-import { yupResolver } from "@hookform/resolvers/yup";
+import type { TypesButton } from "../../components/Button/types";
 import { CartFormValidation, CartFormValidation2 } from "../../YupSchemas/CartFormValidation";
 import { v4 as uuidv4 } from 'uuid';
 import { newOrder } from "../../services/OrderServices";
 import { delivery_rate } from "../../global/GlobalValues";
 import { MapLocation } from "../../components/Map/MapLocation";
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const Cart = () => {
     const navigate = useNavigate();
@@ -53,7 +53,7 @@ export const Cart = () => {
             //estamos pegando os items do carrinho, o formulário de informações
             //e pegando o formulário de observações
 
-            let valueFinal: number;
+            let valueFinal: number = 0;
             if (data.delivery == "entrega") {
                 valueFinal = total() + delivery_rate
             } else if (data.delivery == "retirada") {
@@ -70,8 +70,7 @@ export const Cart = () => {
 
             // console.log(order)
             setLoading(true)
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            const response = await newOrder(order)
+            await newOrder(order)
             // console.log(response)
             setLoading(false)
 

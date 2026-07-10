@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 export const LayoutAdmin = () => {
     const path = useLocation().pathname.split('/')[2].toUpperCase();
     const [isOpenOrCloseSide, setIsOpenOrCloseSide] = useState<boolean>(false)
-    const [userAuth, setUserAuth] = useState<boolean>(false)
+    const [userAuth] = useState<boolean>(false)
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect

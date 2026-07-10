@@ -5,6 +5,6 @@ export interface CreateOrderType {
     orderId: string;
     formData: FormCartType;
     cartItems: Product[];
-    createdAt: Date;
+    createdAt: string;
     cartItemsValueTotal: number;
 }

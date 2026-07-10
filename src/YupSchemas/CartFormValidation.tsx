@@ -11,7 +11,7 @@ export const CartFormValidation = y.object({
     payment_method: y.string().required("Forma de pagamento é um campo obrigatório"),
     delivery: y.string().required("Este é um campo obrigatório"),
 
-    observation: y.string().optional().max(255),
+    observation: y.string().default(undefined).max(255).notRequired(),
 
     needChange: y.string().notRequired(),
     // change: y.number().typeError("Insira um valor númerico").optional().positive().notRequired(),
@@ -21,6 +21,6 @@ export const CartFormValidation2 = y.object({
     phone: y.string().required("Numero de contato é um campo obrigatório"),
     payment_method: y.string().required("Forma de pagamento é um campo obrigatório"),
     delivery: y.string().required("Este é um campo obrigatório"),
-    observation: y.string().optional().max(255),
+    observation: y.string().default(undefined).notRequired().max(255),
     needChange: y.string().notRequired(),
 })
