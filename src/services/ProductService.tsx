@@ -1,5 +1,4 @@
 import type { Product } from "../types/ProductType"
-import photoExample from '../assets/hotdog-ex.jpg'
 
 export const products: Product[] = [
     // {

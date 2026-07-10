@@ -3,7 +3,7 @@ import type { Product } from "../types/ProductType";
 
 
 interface cartContext {
-    cart: Product[],
+    // cart: Product[],
     add: (product: cartContext) => void,
     remove: (product: cartContext) => void,
     total: () => number,

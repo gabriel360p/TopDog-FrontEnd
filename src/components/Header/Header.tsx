@@ -1,7 +1,6 @@
-import { Phone, ShoppingBag, ShoppingCart, User, WineOff } from "lucide-react"
+import { Phone, ShoppingBag } from "lucide-react"
 import Logo from '../../assets/top-dog.png'
 import { useNavigate } from "react-router-dom"
-import { sendMessage } from "../../utils/sendMessageWpp"
 export const Header = () => {
     const navigate = useNavigate()
     function redirect() {

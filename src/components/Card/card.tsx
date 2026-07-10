@@ -11,12 +11,12 @@ interface ProductCard {
     price?: number;
     offer?: boolean;
     icon?: ReactNode;
-    product: Product
+    product: Product;
     onClick?: () => void
 
 }
 
-const Card = ({ onClick, product, photo, title, description, icon, price, ...rest }: ProductCard) => {
+const Card = ({ onClick, product, photo, title, description, icon, price }: ProductCard) => {
     const { add } = useCart()
     const [timout, setTimout] = useState<boolean>(false)
 

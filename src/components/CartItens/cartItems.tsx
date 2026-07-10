@@ -6,7 +6,8 @@ interface ItemCart {
     item: Product;
 }
 export const CartItem = ({ item }: ItemCart) => {
-    const { cart, plus, remove, update } = useCart();
+    const { plus, remove } = useCart();
+
     function handlePlus(item: Product) {
         plus(item)
     }
