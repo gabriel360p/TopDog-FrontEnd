@@ -72,7 +72,9 @@ export const Modal = ({ data, onClose }: ModalProps) => {
                         }}
                         className="bg-primary/25 rounded-lg p-1 active:translate-y-2 flex items-center justify-center cursor-pointer"
                     >
-                        {timout ? (<Loader2 className="animate-spin" />) : <ShoppingBag size={30} className="text-secundary" />}
+                        {/* {timout ? (<Loader2 className="animate-spin" />) : <ShoppingBag size={30} className="text-secundary" />} */}
+                        {data.disponible ? timout ? (<Loader2 className="animate-spin" />) : <ShoppingBag size={30} className="text-secundary" /> : (<p>Indisponível</p>)
+                        }
                     </div>
 
                 </div>

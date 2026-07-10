@@ -16,7 +16,7 @@ interface ProductCard {
 
 }
 
-const Card = ({ onClick, product, photo, title, description, icon, price, }: ProductCard) => {
+const Card = ({ onClick, product, photo, title, description, icon, price, ...rest }: ProductCard) => {
     const { add } = useCart()
     const [timout, setTimout] = useState<boolean>(false)
 
@@ -39,6 +39,8 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
             <div
                 onClick={onClick}
                 className={`
+                ${product.disponible ? "opacity-100" : "opacity-40"}
+
                 flex flex-col justify-between
                 hover:-translate-y-2.5
                 hover:transition-all
@@ -54,7 +56,7 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
             >
 
                 <img
-
+                    alt="imagem-produto-indisponível"
                     src={photo}
                     className={
                         `
@@ -86,13 +88,18 @@ const Card = ({ onClick, product, photo, title, description, icon, price, }: Pro
                             event.stopPropagation();
                             handleAddCart(product);
                         }}
-                        className="bg-primary/25 rounded-lg p-1  active:translate-y-2 flex items-center justify-center cursor-pointer"
+                        className={`
+                        bg-primary/25 rounded-lg p-1  active:translate-y-2 flex items-center justify-center cursor-pointer
+                        `}
+
                     >
-                        {timout ? (<Loader2 className="animate-spin" />) : icon}
+                        {
+                            product.disponible ? timout ? (<Loader2 className="animate-spin" />) : icon : (<p>Indisponível</p>)
+                        }
                     </div>
 
                 </div>
-            </div>
+            </div >
         </>
 
     )

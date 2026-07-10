@@ -7,8 +7,8 @@ export async function newOrder(data: CreateOrderType) {
     try {
         const response = await api.post('/pedido', data)
         // console.log(response)
-        toast.success("Pedido criado com sucesso")
-        alert("Estamos redirecionando para o nosso Whatsapp!!")
+        toast.success("Seu pedido está sendo processado!")
+        alert("Estamos redirecionando para o nosso Whatsapp!")
         setTimeout(() => {
             sendMessage(data)
         }, 2000)
