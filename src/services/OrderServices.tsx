@@ -5,7 +5,8 @@ import { sendMessage } from "../utils/sendMessageWpp";
 
 export async function newOrder(data: CreateOrderType) {
     try {
-        await api.post('/pedido', data)
+        await api.post('/https://topdog-backend.onrender.com/pedido', data)
+        // await api.post('/pedido', data)
         // console.log(response)
         toast.success("Seu pedido está sendo processado!")
         alert("Estamos redirecionando para o nosso Whatsapp!")
